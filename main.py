@@ -4,4 +4,4 @@ from kivy.uix.label import Label
 
 class kivyProj():
     def __init__(self):
-        Screen= screen
+        kjhgdjks
