@@ -55,3 +55,4 @@ class KivyProj(MDApp):
 
 
 KivyProj().run()
+#by pranaya
