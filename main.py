@@ -1,50 +1,47 @@
-# Program to Show how to create textinput
-# with button in kivy using .kv file
 
-##################################################
-# import kivy module
-import kivy
-
-# base Class of your App inherits from the App class.
-# app:always refers to the instance of your application
 from kivy.app import App
-
-# this restrict the kivy version i.e
-# below this kivy version you cannot
-# use the app or software
-kivy.require('1.9.1')
-
-# Widgets are elements
-# of a graphical user interface
-# that form part of the User Experience.
-from kivy.uix.widget import Widget
-
-# The TextInput widget provides a
-# box for editable plain text
-from kivy.uix.textinput import TextInput
-
-# BoxLayout arranges widgets in either
-# in a vertical fashion that is
-# one on top of another or in a horizontal
-# fashion that is one after another.
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.label import Label
+from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ListProperty
 
-# to change the kivy default settings we use this module config
-from kivy.config import Config
+kv = '''
+<ColoredLabel>:
+    size: (100,100)
 
-# 0 being off 1 being on as in true / false
-# you can use 0 or 1 && True or False
-Config.set('graphics', 'resizable', True)
+    background_color:
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    '''
+
+Builder.load_string(kv)
+
+class ColoredLabel(Label):
+    background_color = ListProperty((0,0,0,1))
+
+class MyApp(App):
+    def build(self):
+        f = FloatLayout()
+        layout = BoxLayout(size_hint=(1, None), height=50, pos_hint={'top': 1})
+
+        '''label1 = ColoredLabel(text="jenkins", background_color=(160,160,160,.5))
+        layout.add_widget(label1)
+
+        label2 = ColoredLabel(text="git", background_color=(160,160,160,.5))
+        layout.add_widget(label2)
+
+        label3 = ColoredLabel(text="portal", background_color=(160,160,160,.5))
+        layout.add_widget(label3)
+
+        f.add_widget(layout)
 
 
-# class in which we are creating the Textinput and btn
-# in .kv file to be named main.kv
-class MainApp(App):
-    def on_text(instance, value):
-        print('The widget', instance, 'have:', value)
-        textinput = TextInput()
-        textinput.bind(text=instance.on_text)
+        return f'''
 
-if __name__ == '__main__':
-    MainApp().run()
-
+if __name__ == "__main__":
+    MyApp().run()
